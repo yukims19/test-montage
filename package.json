@@ -6,7 +6,7 @@
     "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "start": "node server",
-    "heroku-postbuild": "npm install && npm run server"
+    "heroku-postbuild": "npm install && npm run start"
   },
   "engines": {
     "node": "8.1.3",
