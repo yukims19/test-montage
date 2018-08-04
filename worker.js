@@ -1,14 +1,16 @@
 const { Client } = require("pg");
 const escape = require("pg-escape");
-
+const connectionString = "postgresql://yukili:56112533@localhost:5432/montage";
+/*
 const connectionString =
   "postgresql://dbuser:secretpassword@database.server.com:3211/mydb";
+  */
 
 const fetch = require("node-fetch");
 const idx = require("idx");
 const kue = require("kue"),
   queue = kue.createQueue();
-
+//kue.app.listen(3000);
 let cursor = null;
 let hasNextPage = true;
 
@@ -281,6 +283,6 @@ module.exports = {
     process(slug, uid);
   }
 };
-//process("submarine-popper", "MDQ6VXNlcjI3Mzk5NjU2");
+process("submarine-popper", "MDQ6VXNlcjI3Mzk5NjU2");
 
 //client.end();

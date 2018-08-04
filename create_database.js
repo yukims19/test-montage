@@ -1,8 +1,9 @@
 const { Client } = require("pg");
-
+const connectionString = "postgresql://yukili:56112533@localhost:5432/montage";
+/*
 var config = parse(
   "postgres://someuser:somepassword@somehost:381/somedatabase"
-);
+);*/
 
 const client = new Client({ connectionString: connectionString });
 client.connect();
