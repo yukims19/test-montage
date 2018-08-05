@@ -982,6 +982,9 @@ class App extends Component {
       this.setState({
         [event]: isLoggedIn
       });
+      if (isLoggedIn) {
+        storeAuthTokenAndId();
+      }
     });
   }
   callLogin = async (token, userid) => {
@@ -995,6 +998,41 @@ class App extends Component {
     if (response.status !== 200) throw Error(body.message);
     return body;
   };
+
+  storeAuthTokenAndId() {
+    const token = JSON.parse(
+      localStorage.getItem("oneGraph:59f1697f-4947-49c0-964e-8e3d4fa640be")
+    )["accessToken"];
+    const GET_GithubId = `query {
+                                    me {
+                                      github {
+                                        id
+                                      }
+                                    }
+                                  }`;
+    fetch(
+      "https://serve.onegraph.com/dynamic?app_id=59f1697f-4947-49c0-964e-8e3d4fa640be",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          query: GET_GithubId,
+          variables: null
+        }),
+        headers: {
+          Authentication: "Bearer " + token,
+          Accept: "application/json"
+        }
+      }
+    )
+      .then(res => res.json())
+      .catch(error => error.json())
+      .then(json => {
+        const userid = json.data.me.github.id;
+        this.callLogin(token, userid).then(res => {
+          console.log(res);
+        });
+      });
+  }
   handleClick(service) {
     try {
       auth.login(service).then(() => {
@@ -1004,41 +1042,7 @@ class App extends Component {
             this.setState({
               [service]: isLoggedIn
             });
-
-            const token = JSON.parse(
-              localStorage.getItem(
-                "oneGraph:59f1697f-4947-49c0-964e-8e3d4fa640be"
-              )
-            )["accessToken"];
-            const GET_GithubId = `query {
-                                    me {
-                                      github {
-                                        id
-                                      }
-                                    }
-                                  }`;
-            fetch(
-              "https://serve.onegraph.com/dynamic?app_id=59f1697f-4947-49c0-964e-8e3d4fa640be",
-              {
-                method: "POST",
-                body: JSON.stringify({
-                  query: GET_GithubId,
-                  variables: null
-                }),
-                headers: {
-                  Authentication: "Bearer " + token,
-                  Accept: "application/json"
-                }
-              }
-            )
-              .then(res => res.json())
-              .catch(error => error.json())
-              .then(json => {
-                const userid = json.data.me.github.id;
-                this.callLogin(token, userid).then(res => {
-                  console.log(res);
-                });
-              });
+            storeAuthTokenAndId();
           } else {
             console.log("Did not grant auth for service " + service);
             this.setState({
