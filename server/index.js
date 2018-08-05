@@ -1,7 +1,5 @@
 const express = require("express");
 const path = require("path");
-const cluster = require("cluster");
-const numCPUs = require("os").cpus().length;
 
 const bodyParser = require("body-parser");
 const app = express();
@@ -16,6 +14,7 @@ const connectionString =
   "postgres://omahrmiojnmlax:61741e41fc32e87113a2f76723798be243e97b556907120f6edd5b6e91aa335d@ec2-50-17-250-38.compute-1.amazonaws.com:5432/d162q4l6qggmkj";
 const client = new Client({ connectionString: connectionString, ssl: true });
 client.connect();
+const worker = require("./worker");
 
 // Priority serve any static files.
 app.use(express.static(path.resolve(__dirname, "../react-ui/build")));
@@ -72,6 +71,7 @@ app.get("/users/:posts", (req, res) => {
       (error, response) => {
         const isSlugNew = !response.rows[0].exists;
         if (isSlugNew) {
+          console.log("worker here++++++++++");
           worker.queuePostBySlug(slug, uid);
         }
       }
