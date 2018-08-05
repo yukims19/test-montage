@@ -889,7 +889,7 @@ class App extends Component {
   componentDidMount() {
     if (this.state.github) {
       console.log("\\\\\\\\\\\\\\\\\\\\github\\\\\\\\\\\\");
-      storeAuthTokenAndId();
+      this.storeAuthTokenAndId();
     }
     this.callFirstUser()
       .then(res => {
@@ -1043,7 +1043,7 @@ class App extends Component {
             this.setState({
               [service]: isLoggedIn
             });
-            storeAuthTokenAndId();
+            this.storeAuthTokenAndId();
           } else {
             console.log("Did not grant auth for service " + service);
             this.setState({
