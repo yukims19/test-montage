@@ -216,6 +216,7 @@ function getdata(q, v, token, slug, done) {
         );
       } else {
         //client.end();
+        cursor = null;
         done();
       }
     });
