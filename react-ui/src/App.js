@@ -887,6 +887,10 @@ class App extends Component {
   }
 
   componentDidMount() {
+    if (this.state.github) {
+      console.log("\\\\\\\\\\\\\\\\\\\\github\\\\\\\\\\\\");
+      storeAuthTokenAndId();
+    }
     this.callFirstUser()
       .then(res => {
         this.setState({
@@ -979,16 +983,9 @@ class App extends Component {
 
   isLoggedIn(event) {
     auth.isLoggedIn(event).then(isLoggedIn => {
-      this.setState(
-        {
-          [event]: isLoggedIn
-        },
-        () => {
-          if (this.state.github) {
-            storeAuthTokenAndId();
-          }
-        }
-      );
+      this.setState({
+        [event]: isLoggedIn
+      });
     });
   }
   callLogin = async (token, userid) => {
