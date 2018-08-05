@@ -247,6 +247,7 @@ function createPostQueue(q, v, token, slug) {
       token: token,
       slug: slug
     })
+    .removeOnComplete(true)
     .save(function(err) {
       if (!err) console.log(job.id);
     });
@@ -306,7 +307,7 @@ function initWorker() {
   startProcessingPostJobs();
 }
 
-if (true) {
+if ("worker" === role) {
   initWorker();
   //  queuePostBySlug("test8", "MDQ6VXNlcjI3Mzk5NjU2");
 }
