@@ -238,7 +238,6 @@ function startProcessingPostJobs() {
 
 function createPostQueue(q, v, token, slug) {
   console.log("!!!!!!!!!!!!!!!!!create job!!!!!!!");
-  console.log(token);
   let job = queue
     .create("people_data", {
       title: "Get People Data",
@@ -247,7 +246,6 @@ function createPostQueue(q, v, token, slug) {
       token: token,
       slug: slug
     })
-    .removeOnComplete(true)
     .save(function(err) {
       if (!err) console.log(job.id);
     });
