@@ -777,9 +777,10 @@ class AllUsers extends Component {
     return body;
   };
   render() {
+    console.log(this.state.response);
     return (
       <div className="left-body">
-        {this.state.response
+        {/*this.state.response
           ? this.state.response.map(e => {
               return (
                 <li
@@ -801,7 +802,7 @@ class AllUsers extends Component {
                 </li>
               );
             })
-          : ""}
+          : ""*/}
       </div>
     );
   }
