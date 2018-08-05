@@ -82,6 +82,7 @@ const peopleDataQuery = `
   }*/
 function getdata(q, v, token, slug, done) {
   console.log("+++++++++++++++++++++get data+++++++++++++++");
+  console.log(v);
   var bodycontent = {
     query: q,
     variables: v
@@ -224,6 +225,7 @@ function startProcessingPostJobs() {
   queue.watchStuckJobs(1000);
   queue.process("people_data", 20, function(job, done) {
     console.log("procesing");
+    console.log(job.data.token);
     getdata(
       job.data.query,
       job.data.variables,
@@ -245,7 +247,7 @@ function createPostQueue(q, v, token, slug) {
       token: token,
       slug: slug
     })
-    //    .removeOnComplete(true)
+    .removeOnComplete(true)
     .save(function(err) {
       if (!err) console.log(job.id);
     });
