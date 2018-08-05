@@ -10,14 +10,17 @@ const idx = require("idx");
 const redisConnectionString =
   "redis://h:pa1d61e3cf1491c6c3e9f7daf48258bb11fa198b853d388a2fb9e2052f0dbb600@ec2-34-232-249-65.compute-1.amazonaws.com:16069";
 const kue = require("kue"),
-  queue = kue.createQueue({ redis: redisConnectionString });
+  queue = kue.createQueue({ redis: process.env.REDIS_URL });
 //kue.app.listen(3000);
 let cursor = null;
 let hasNextPage = true;
 
 const connectionString =
   "postgres://omahrmiojnmlax:61741e41fc32e87113a2f76723798be243e97b556907120f6edd5b6e91aa335d@ec2-50-17-250-38.compute-1.amazonaws.com:5432/d162q4l6qggmkj";
-const client = new Client({ connectionString: connectionString, ssl: true });
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true
+});
 client.connect();
 
 const peopleDataQuery = `
