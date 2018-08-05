@@ -48,7 +48,11 @@ app.get("/user/:id", (req, res) => {
 
 app.get("/users", (req, res) => {
   var sql = "SELECT * FROM people";
-  res.send({ name: "hello????????????/" });
+  res.send([
+    { name: "hello????????????/" },
+    { name: "hello????????????/" },
+    { name: "2222222222222" }
+  ]);
   /*
     let resData;
     client.query(sql, (error, response) => {
