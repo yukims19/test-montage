@@ -1076,9 +1076,6 @@ class App extends Component {
     );
   }
   render() {
-    if (this.state.github) {
-      this.storeAuthTokenAndId();
-    }
     return (
       <div>
         {this.state.github
