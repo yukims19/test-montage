@@ -887,10 +887,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    if (this.state.github) {
-      console.log("\\\\\\\\\\\\\\\\\\\\github\\\\\\\\\\\\");
-      this.storeAuthTokenAndId();
-    }
     this.callFirstUser()
       .then(res => {
         this.setState({
@@ -1080,6 +1076,9 @@ class App extends Component {
     );
   }
   render() {
+    if (this.state.github) {
+      this.storeAuthTokenAndId();
+    }
     return (
       <div>
         {this.state.github
