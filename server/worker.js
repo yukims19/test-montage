@@ -313,4 +313,6 @@ if ("worker" === role) {
 }
 
 console.log("worker here!!");
+//process.env.ROLE = "worker";
+console.log(process.env);
 //client.end();
