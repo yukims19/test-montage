@@ -872,7 +872,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      eventil: false,
+      github: null,
       resname: null,
       resurl: null,
       restwitter: null,
@@ -979,12 +979,16 @@ class App extends Component {
 
   isLoggedIn(event) {
     auth.isLoggedIn(event).then(isLoggedIn => {
-      this.setState({
-        [event]: isLoggedIn
-      });
-      if (isLoggedIn) {
-        storeAuthTokenAndId();
-      }
+      this.setState(
+        {
+          [event]: isLoggedIn
+        },
+        () => {
+          if (this.state.github) {
+            storeAuthTokenAndId();
+          }
+        }
+      );
     });
   }
   callLogin = async (token, userid) => {
